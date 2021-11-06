@@ -1,0 +1,5 @@
+# Dependencies
+node_modules
+
+# VSCode test requests
+requests
