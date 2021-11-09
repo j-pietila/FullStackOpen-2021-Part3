@@ -7,3 +7,5 @@ Linkki sovellukseen: https://quiet-headland-61623.herokuapp.com/
 puhelinluettelo-backend
   * Tehtävät 3.1 - 3.6
   * Tehtävät 3.7 - 3.8
+  * Tehtävät 3.9 - 3.11
+  * Tehtävä 3.12
