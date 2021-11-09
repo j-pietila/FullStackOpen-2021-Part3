@@ -59,3 +59,4 @@ if (process.argv.length === 3) { // Only password as a parameter
 else if (process.argv.length === 5) { // Password, name and number as parameters
 	addPerson()
 }
+
