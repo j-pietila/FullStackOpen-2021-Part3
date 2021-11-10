@@ -1,8 +1,11 @@
+require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 
 const app = express()
+
+const Person = require("./models/person")
 
 app.use(express.json())
 app.use(express.static("build"))
@@ -52,19 +55,26 @@ app.get("/api/info", (request, response) => {
 })
 
 app.get("/api/persons", (request, response) => {
-  response.json(persons)
+  Person
+    .find({})
+    .then(person => {
+      response.json(person)
+    })
+    .catch(error => {
+      console.log("Error:", error.message)
+    })
 })
 
 app.get("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-
-  if (person) {
+  Person
+  .findById(request.params.id)
+  .then(person => {
     response.json(person)
-  }
-  else {
+  })
+  .catch(error => {
+    console.log("Error:", error.message)
     response.status(404).end()
-  }
+  })
 })
 
 app.post("/api/persons", (request, response) => {
@@ -80,21 +90,17 @@ app.post("/api/persons", (request, response) => {
       error: "number missing"
     })
   }
-  else if (persons.some(person => person.name === body.name)) {
-    return response.status(400).json({
-      error: "name already in phonebook"
-    })
-  }
 
-  const person = {
-    id: Math.floor(Math.random() * 10000),
+  const person = new Person({
     name: body.name,
-    number: body.number
-  }
+    number: body.number,
+  })
 
-  persons = persons.concat(person)
-
-  response.json(person)
+  person
+    .save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
 })
 
 app.delete("/api/persons/:id", (request, response) => {
@@ -104,6 +110,6 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end()
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
