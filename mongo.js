@@ -7,8 +7,8 @@ const mongoose = require("mongoose")
 if (process.argv.length < 3 ||
    (process.argv.length > 3 && process.argv.length < 5) ||
    (process.argv.length > 5)) {
-     console.log("Wrong number of arguments. Check code file for proper program usage.")
-     process.exit(1)
+  console.log("Wrong number of arguments. Check code file for proper program usage.")
+  process.exit(1)
 }
 
 const password = process.argv[2]
@@ -30,16 +30,16 @@ const getPersons = () => {
     .find({})
     .then(result => {
       result.forEach(person => {
-      console.log(`${person.name} ${person.number}`)
+        console.log(`${person.name} ${person.number}`)
+      })
+      mongoose.connection.close()
     })
-    mongoose.connection.close()
-  })
 }
 
 const addPerson = () => {
   const newName = process.argv[3]
   const newNumber = process.argv[4]
-	
+
   const person = new Person({
     name: newName,
     number: newNumber,
@@ -47,7 +47,7 @@ const addPerson = () => {
 
   person
     .save()
-    .then(response => {
+    .then(() => {
       console.log(`Added ${newName} number ${newNumber} to phonebook`)
       mongoose.connection.close()
     })

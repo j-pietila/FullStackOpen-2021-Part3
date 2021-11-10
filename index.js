@@ -21,7 +21,7 @@ morgan.token("response-data", (req, res) => {
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :response-data"))
 
 
-app.get("/api/info", (request, response) => {
+app.get("/api/info", (request, response, next) => {
   Person
     .count({})
     .then(count => {
@@ -46,11 +46,11 @@ app.get("/api/persons", (request, response, next) => {
 
 app.get("/api/persons/:id", (request, response, next) => {
   Person
-  .findById(request.params.id)
-  .then(person => {
-    response.json(person)
-  })
-  .catch(error => next(error))
+    .findById(request.params.id)
+    .then(person => {
+      response.json(person)
+    })
+    .catch(error => next(error))
 })
 
 app.post("/api/persons", (request, response, next) => {
@@ -87,11 +87,11 @@ app.put("/api/persons/:id", (request, response, next) => {
 
 app.delete("/api/persons/:id", (request, response, next) => {
   Person
-  .findByIdAndDelete(request.params.id)
-  .then(result => {
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .findByIdAndDelete(request.params.id)
+    .then(() => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 

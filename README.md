@@ -12,3 +12,4 @@ puhelinluettelo-backend
   * Tehtävät 3.13 - 3.14
   * Tehtävät 3.15 - 3.18
   * Tehtävät 3.19 - 3.21
+  * Tehtävä 3.22
